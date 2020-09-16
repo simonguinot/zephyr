@@ -1,0 +1,7 @@
+sample:
+  description: Demonstration of the B1414 IC LED driver
+  name: B1414 IC sample
+tests:
+  sample.drivers.led.b1414:
+    platform_allow: nucleo_f070rb
+    tags: LED
