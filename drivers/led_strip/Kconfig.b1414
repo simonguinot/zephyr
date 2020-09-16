@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: Apache-2.0
+
+config B1414_STRIP
+	bool "B1414 LED strip driver"
+	help
+	  Enable LED strip driver for a daisy chain of B1414 IC devices.
+
+if B1414_STRIP
+
+choice
+	prompt "Backend"
+
+config B1414_STRIP_SPI
+	bool "SPI"
+	depends on SPI
+	help
+	  This driver uses the MOSI pin of the SPI controller to output a
+	  control signal compatible with the B1414 IC. Note that the SPI
+	  controller must support a frequency close from 6-7 MHz.
+
+endchoice
+
+endif

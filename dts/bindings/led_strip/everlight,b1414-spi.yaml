@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  Everlight B1414 IC LED strip, SPI binding
+
+  Driver bindings to control a daisy chain of B1414 IC (or compatible IC)
+  with a SPI master.
+
+  The SPI driver should be usable as long as a zephyr SPI API driver is
+  available for your board. Hardware specific tuning is required using
+  these properties:
+
+    - spi-max-frequency (must be close from 6-7 MHz)
+    - spi-zero-frame
+    - spi-one-frame.
+
+  Using this driver implies an 8x internal memory overhead (1 byte of driver
+  RAM overhead per bit of pixel data).
+
+compatible: "everlight,b1414-spi"
+
+include: [spi-device.yaml, b1414.yaml]
+
+properties:
+
+  spi-one-frame:
+    type: int
+    required: true
+    description: 8-bit SPI frame to shift out for a 1 pulse.
+
+  spi-zero-frame:
+    type: int
+    required: true
+    description: 8-bit SPI frame to shift out for a 0 pulse.
