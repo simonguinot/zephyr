@@ -323,6 +323,19 @@
 			status = "disabled";
 			label = "DMA_2";
 		};
+
+		dmamux1: dmamux@48002000 {
+			compatible = "st,stm32-dmamux";
+			#dma-cells = <4>;
+			reg = <0x48002000 0x400>;
+			interrupts = <102 0>;
+			clocks = <&rcc STM32_CLOCK_BUS_AHB2 0x4>;
+			dma-channels = <16>;
+			dma-generators = <8>;
+			dma-requests= <108>;
+			status = "disabled";
+			label = "DMAMUX_1";
+		};
 	};
 };
 
