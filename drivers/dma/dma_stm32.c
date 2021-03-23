@@ -434,7 +434,7 @@ DMA_STM32_EXPORT_API int dma_stm32_configure(const struct device *dev,
 			config->dma_slot = 0;
 		}
 	}
-	DMA_InitStruct.Channel = dma_stm32_slot_to_channel(config->dma_slot);
+	//DMA_InitStruct.Channel = dma_stm32_slot_to_channel(config->dma_slot);
 
 	DMA_InitStruct.FIFOThreshold = stm32_dma_get_fifo_threshold(
 					config->head_block->fifo_mode_control);
