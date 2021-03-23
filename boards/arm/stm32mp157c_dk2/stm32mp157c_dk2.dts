@@ -86,3 +86,15 @@
 	status = "okay";
 	clock-frequency = <I2C_BITRATE_FAST>;
 };
+
+&dma1 {
+	status = "okay";
+};
+
+&dma2 {
+	status = "okay";
+};
+
+&dmamux1 {
+	status = "okay";
+};
