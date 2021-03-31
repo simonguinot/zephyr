@@ -1,0 +1,31 @@
+/*
+ * Copyright (c) 2019, Nordic Semiconductor ASA
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include "../stm32mp157-bindings.h"
+
+&spi4 { /* MOSI on ? */
+	led_strip: b1414@0 {
+		compatible = "everlight,b1414-spi";
+		label = "B1414";
+
+		/* SPI */
+		reg = <0>; /* ignored, but necessary for SPI bindings */
+		spi-max-frequency = <SPI_FREQ>;
+
+		/* B1414 */
+		chain-length = <18>; /* arbitrary; change at will */
+		spi-one-frame = <ONE_FRAME>;
+		spi-zero-frame = <ZERO_FRAME>;
+
+		status = "okay";
+	};
+};
+
+/ {
+	aliases {
+		led-strip = &led_strip;
+	};
+};
