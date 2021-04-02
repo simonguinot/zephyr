@@ -120,7 +120,12 @@ static int spi_stm32_dma_tx_load(const struct device *dev, const uint8_t *buf,
 		}
 	}
 
+/* STM32MP1, STM32H7 series */
+#ifdef SPI_TXDR_TXDR
+	blk_cfg->dest_address = (uint32_t)cfg->spi->TXDR;
+#else
 	blk_cfg->dest_address = (uint32_t)LL_SPI_DMA_GetRegAddr(cfg->spi);
+#endif
 	/* fifo mode NOT USED there */
 	if (data->dma_tx.dst_addr_increment) {
 		blk_cfg->dest_addr_adj = DMA_ADDR_ADJ_INCREMENT;
@@ -179,7 +184,12 @@ static int spi_stm32_dma_rx_load(const struct device *dev, uint8_t *buf,
 		}
 	}
 
+/* STM32MP1, STM32H7 series */
+#ifdef SPI_RXDR_RXDR
+	blk_cfg->dest_address = (uint32_t)cfg->spi->RXDR;
+#else
 	blk_cfg->source_address = (uint32_t)LL_SPI_DMA_GetRegAddr(cfg->spi);
+#endif
 	if (data->dma_rx.src_addr_increment) {
 		blk_cfg->source_addr_adj = DMA_ADDR_ADJ_INCREMENT;
 	} else {
@@ -730,6 +740,11 @@ static int transceive_dma(const struct device *dev,
 		}
 #endif
 
+/* Use the end of transfer register if available (STM32MP1, STM32H7 series). */
+#ifdef SPI_SR_EOT
+		while (LL_SPI_IsActiveFlag_EOT(spi) == 0) {
+		}
+#else
 		/* wait until TX buffer is really empty */
 		while (LL_SPI_IsActiveFlag_TXE(spi) == 0) {
 		}
@@ -737,6 +752,7 @@ static int transceive_dma(const struct device *dev,
 		/* wait until hardware is really ready */
 		while (LL_SPI_IsActiveFlag_BSY(spi) == 1) {
 		}
+#endif
 
 		LL_SPI_DisableDMAReq_TX(spi);
 		LL_SPI_DisableDMAReq_RX(spi);
