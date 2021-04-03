@@ -54,6 +54,8 @@
 &spi4{
 	pinctrl-0 = <&spi4_nss_pe11 &spi4_sck_pe12
 		     &spi4_miso_pe13 &spi4_mosi_pe14>;
+	dmas = <&dmamux1 8 126 0x20480 0>, <&dmamux1 9 127 0x20440 0>;
+	dma-names = "rx", "tx";
 	status = "okay";
 };
 
